@@ -73,7 +73,7 @@ function show_home(){
     tag("canvas").innerHTML=` 
     <div class="center-screen">
     
-    <p><img height="${window.innerHeight * .6}" src="images/utah-valley-university.svg"></p>
+    <p><img height="${window.innerHeight * .3}" src="images/utah-valley-university.svg"></p>
     <div style="text-align:center"></div>
     
     
