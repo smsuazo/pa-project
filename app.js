@@ -7,7 +7,7 @@ const gas_end_point = 'https://script.google.com/macros/s/'+gas_deployment_id+'/
 const nav_menu=[
     //Note that a menu item is added by inserting an object for that menu item. The 'label' is the text that the user sees for that menu option. The function is the javascript function invoked when selecting that option. Here we insert the "home" and "locations" menu items. Both initiate a call to the navigate function which loads the appropriate page. The navigate function is used to help ensure smooth navigation. It allows the user to use the back botton in their browser when navigating between pages on the site (without navigating out ot the site). The navigate can accept parameters that can be passed to the function called by navigate.
     {label:"Home",function:"navigate({fn:'show_home'})"},
-    {label:"Locations",function:"navigate({fn:'show_locations'})"},
+    {label:"Contact",function:"navigate({fn:'show_locations'})"},
     
 ]
 
