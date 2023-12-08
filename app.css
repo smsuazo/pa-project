@@ -2,13 +2,13 @@ html {zoom: 100%;}
 
 body{
     padding:0;
-    background-color: #275d38;
+    background-color: white;
     text-align: left;
     min-width: 200px;
 }
 
 h1 {
-    color: white;
+    color: #0a5d00;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     font-size: 2rem;
     line-height: 2rem;
@@ -18,7 +18,7 @@ h1 {
 h2{
     margin-top:0;
     margin-bottom:.5rem;
-    color: white;
+    color: #0a5d00;
 }
 .center-screen {
     position: absolute;
@@ -42,7 +42,7 @@ h2{
     padding:1rem;
     text-align: left;
     border-radius: 5px;
-    border: 2px lightgrey solid;
+    border: 2px #0a5d00 solid;
 }
 
 #welcome p{
@@ -69,19 +69,19 @@ h2{
 }
 
 .inventory-table{
-    background-color: lightgrey;
+    background-color: white;
 
 }
 
 
 .inventory-table th {
-    color: maroon;
-    background-color: lightyellow;
+    color: #0a5d00;
+    background-color: white;
     margin:1px;
     padding: 4px 8px 4px 8px;
 }
 .inventory-table td {
-    color: black;
+    color: #089000;
     margin:1px;
     padding: 4px 8px 4px 8px;
     white-space: nowrap;
