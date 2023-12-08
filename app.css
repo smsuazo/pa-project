@@ -69,19 +69,19 @@ h2{
 }
 
 .inventory-table{
-    background-color: white;
+    background-color: #0a5d00;
 
 }
 
 
 .inventory-table th {
-    color: #0a5d00;
-    background-color: white;
+    color: white;
+    background-color: #1fc600;
     margin:1px;
     padding: 4px 8px 4px 8px;
 }
 .inventory-table td {
-    color: #089000;
+    color: white;
     margin:1px;
     padding: 4px 8px 4px 8px;
     white-space: nowrap;
@@ -113,7 +113,7 @@ h2{
     display:none;
 }
 .inactive{
-    background-color: lightyellow;
+    background-color: #f0f7da;
 }
 .active{
     background-color: white;
