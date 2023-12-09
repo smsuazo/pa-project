@@ -617,9 +617,9 @@ async function employee_list(){
     //Build the HTML placeholders for the employee data.
     tag("canvas").innerHTML=` 
     <div class="page">
-        <h2>Employee List</h2>
+        <h2>Student List</h2>
         <div id="member-list-message" style="padding-top:1rem;margin-bottom:1rem">
-        Employee information is private and should not be shared.
+        Student information is private and should not be shared.
         </div>
         <div id="employee_list_panel">
         <i class="fas fa-spinner fa-pulse"></i>
