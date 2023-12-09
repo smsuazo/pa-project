@@ -193,7 +193,7 @@ async function record_inventory(params){
             const header=[`
             <table class="inventory-table">
                 <tr>
-                <th class="sticky" onclick="show_elements(['col-1','col-2','col-3'])">Flavor</th>
+                <th class="sticky" onclick="show_elements(['col-1','col-2','col-3'])">Department</th>
                 `]
             let p=1 // map store ids to column numbers.  only needed for this loop then can be reused
             
