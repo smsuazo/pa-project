@@ -134,7 +134,7 @@ async function record_inventory(params){
         //building the HTML shell
         tag("canvas").innerHTML=` 
             <div class="page">
-                <div id="inventory-title" style="text-align:center"><h2>Ice Cream Inventory</h2></div>
+                <div id="inventory-title" style="text-align:center"><h2>Add Clinic Hours</h2></div>
                 <div id="inventory-message" style="width:100%"></div>
                 <div id="inventory_panel"  style="width:100%">
                 </div>
@@ -155,7 +155,7 @@ async function record_inventory(params){
             })
         }else{
             //We get here if the user is associated with more than 1 store. We build a form to have the user select the store they wish to work with.
-            const html=['<form>Store: <select name="store">']
+            const html=['<form>Clinic: <select name="store">']
             for(store of user_data.store){
                 html.push(`<option value="${store}">${store_list()[store]}</option>`)
             }
@@ -187,7 +187,7 @@ async function record_inventory(params){
             window.cols={}
             console.log("response", response)
             // build the HTML header for the page identifying the store for which the counts will be recorded
-            tag("inventory-title").innerHTML=`<h2>${store_list()[params.store]} Ice Cream Inventory</h2>`
+            tag("inventory-title").innerHTML=`<h2>${store_list()[params.store]} Clinic Hours</h2>`
             const html=["Fill in every row in this section."]
             //build the table for the form used to record the counts.
             const header=[`
@@ -305,7 +305,7 @@ async function show_inventory_summary(params){
     //building the HTML shell
     tag("canvas").innerHTML=` 
         <div class="page">
-            <div id="inventory-title" style="text-align:center"><h2>Ice Cream Inventory</h2></div>
+            <div id="inventory-title" style="text-align:center"><h2>Clinic Hours</h2></div>
             <div id="inventory-message" style="width:100%"></div>
             <div id="inventory_panel"  style="width:100%">
             </div>
@@ -331,7 +331,7 @@ async function show_inventory_summary(params){
 
         console.log("response", response)
         //build the HMTL heading for the report
-        tag("inventory-title").innerHTML=`<h2>Ice Cream Inventory Summary</h2>`
+        tag("inventory-title").innerHTML=`<h2>Clinic Hours Summary</h2>`
 
 
         //Build the table to display the report. The columns of the table are: Flavor, the stores available to the user, and the total inventory. Since only the owner is given the option to view inventory counts (see the autheticated_user global variable), all stores will be shown in the report.
