@@ -220,10 +220,10 @@ async function record_inventory(params){
                 if(record.fields.category!=="Regular"){
                     target=irregular
                 }
-                //add a row for each flavor (record.field.name)
+                //add a row for each clinic (record.field.name)
                 target.push("<tr>")
                 target.push(`<th>${record.fields.name}</th>`)
-                //build a text input in each cell. Use the combination of the flavor and container ids as the identifier of the input so that we can use it to update the correct record. When a value in the input is change (onchange), the update_observation function is called and passed the value and information needed (store, flavor, and container) to add the observation to the database. update_observation is a function in Amazon App Script.
+                //build a text input in each cell. Use the combination of the clinic and container ids as the identifier of the input so that we can use it to update the correct record. When a value in the input is change (onchange), the update_observation function is called and passed the value and information needed (store, clinic, and container) to add the observation to the database. update_observation is a function in Amazon App Script.
                 for(container of record.fields.container){
                     target.push(`<td class="active col-${window.cols[container]}"><input id="${record.id}|${container.replace(/\s/g,"_")}" data-store="${params.store}" data-item_id="${record.id}" data-container="${container}" type="text" onchange="update_observation(this)"></td>`)
                 }     
@@ -231,7 +231,7 @@ async function record_inventory(params){
             }     
             html.push("</table>")
             //add form to collect observations for the irregular items
-            html.push("<br>In this section, fill in only the rows corresponding to flavors you have on hand.")
+            html.push("<br>In this section, fill in only the rows corresponding to clinics you have on hand.")
             html.push(header.join(""))
             html.push(irregular.join(""))
             html.push("</table>")
@@ -255,7 +255,7 @@ async function record_inventory(params){
                 "¾":.75
             }
 
-            // To the extent that observations may already exist for a flavor in that location in that store, they will be populated on the table. Changes to these values will also be updated.
+            // To the extent that observations may already exist for a clinic in that location in that store, they will be populated on the table. Changes to these values will also be updated.
             if(response.data.records){
                 for(record of response.data.records){
                     const box=tag(record.fields.item[0] + "|" + record.fields.container.replace(/\s/g,"_"))
@@ -277,7 +277,7 @@ async function record_inventory(params){
             for(const [key,row] of Object.entries(window.rows)){
                 if(isNaN(row)){
                     //console.log(row)
-                    tag(row + "|total").innerHTML = flavor_total(row)
+                    tag(row + "|total").innerHTML = clinic_total(row)
                 }
             }
 
@@ -334,11 +334,11 @@ async function show_inventory_summary(params){
         tag("inventory-title").innerHTML=`<h2>Clinic Hours Summary</h2>`
 
 
-        //Build the table to display the report. The columns of the table are: Flavor, the stores available to the user, and the total inventory. Since only the owner is given the option to view inventory counts (see the autheticated_user global variable), all stores will be shown in the report.
+        //Build the table to display the report. The columns of the table are: clinic, the stores available to the user, and the total inventory. Since only the owner is given the option to view inventory counts (see the autheticated_user global variable), all stores will be shown in the report.
         const header=[`
         <table class="inventory-table">
             <tr>
-            <th class="sticky">Flavor</th>
+            <th class="sticky">clinic</th>
             `]
 
         for(const [key,val] of Object.entries(store_list())){
@@ -359,11 +359,11 @@ async function show_inventory_summary(params){
             if(record.fields.category!=="Regular"){
                 target=irregular
             }
-            //add a new table row to the table for each flavor
+            //add a new table row to the table for each clinic
             target.push("<tr>")
-            //insert the flavor name (record.field.name)
+            //insert the clinic name (record.field.name)
             target.push(`<td style="text-align:left">${record.fields.name}</td>`)
-            //create empty cells in the table for the inventory counts. Notice that the ID for the empty cell is set to be a combination of the id for the flavor (record.id) and the store (stores[store]) corresponding to the column. This way the table can be populated with the correct data in the correct cells.
+            //create empty cells in the table for the inventory counts. Notice that the ID for the empty cell is set to be a combination of the id for the clinic (record.id) and the store (stores[store]) corresponding to the column. This way the table can be populated with the correct data in the correct cells.
 
             for(const [key,val] of Object.entries(store_list())){
                 if(key.indexOf("rec")===0){
@@ -371,7 +371,7 @@ async function show_inventory_summary(params){
                 }
             }
 
-            //The totals will be calculated. The id is set to a combination of the flavor id and "total" so that the appropriate totals can be placed correctly in the table. 
+            //The totals will be calculated. The id is set to a combination of the clinic id and "total" so that the appropriate totals can be placed correctly in the table. 
             target.push(`<td id="${record.id}|total"></td>`)
             target.push("</tr>")
         }     
@@ -390,20 +390,20 @@ async function show_inventory_summary(params){
         if(response.data.records){
             //process through each available data item
             for(record of response.data.records){
-                //identity the flavor/store combination for each observation
+                //identity the clinic/store combination for each observation
                 const id = record.fields.item[0] + "|" + record.fields.store[0]
-                //Since the data is ordered by date, if we have already found an observation for a flavor/store combination, any additional obeservations are skipped.
+                //Since the data is ordered by date, if we have already found an observation for a clinic/store combination, any additional obeservations are skipped.
                 if(!data[id]){
                     data[id]={quantity:record.fields.quantity,date:record.fields.date}
                 }
             }
 
-            // now fill the table with the most recent observations found for each flavor/store combination
+            // now fill the table with the most recent observations found for each clinic/store combination
             for(const[key,value] of Object.entries(data)){
-                //create "boxes" for the store observations and totals of each flavor based on the identifiers already created for the individual cells (id's of the <td> tags)
+                //create "boxes" for the store observations and totals of each clinic based on the identifiers already created for the individual cells (id's of the <td> tags)
                 const total_box = tag(key.split("|")[0] + "|total")
                 const box = tag(key)
-                //There will be more than one current observation for a flavor in each store, so we need to total these observations by store. To do this, if there is not currently a value in the table for flavor/store, it is added. If there is an observation, the new observation is added to the one that is currently there (running total logic).
+                //There will be more than one current observation for a clinic in each store, so we need to total these observations by store. To do this, if there is not currently a value in the table for clinic/store, it is added. If there is an observation, the new observation is added to the one that is currently there (running total logic).
                 if(box.innerHTML===""){
                     box.innerHTML=value.quantity
                 }else{
@@ -492,28 +492,28 @@ function move_down(source){
     const ids=source.id.split("|")
     ids[1]=ids[1].replace(/_/g," ")
     
-    let next_flavor=window.rows[window.rows[ids[0]]+1]
+    let next_clinic=window.rows[window.rows[ids[0]]+1]
     let next_container=ids[1]
-    if(!next_flavor){
-        next_flavor=window.rows[1]
+    if(!next_clinic){
+        next_clinic=window.rows[1]
         next_container = window.cols[window.cols[next_container]+1]
         if(!next_container){
             next_container=window.cols[1]
         }
     }
-    tag(next_flavor + "|" + next_container.replace(/\s/g,"_")).focus()
+    tag(next_clinic + "|" + next_container.replace(/\s/g,"_")).focus()
 }
 
-function flavor_total(flavor_id){
+function clinic_total(clinic_id){
     //used to calculate the running total for observations as they are entered into the input form
-    let flavor_total=0
+    let clinic_total=0
     for(const key of Object.keys(window.cols)){
         if(isNaN(key)){
-           // console.log(flavor_id + "|" + key.replace(/\s/g,"_"))
-            flavor_total += parseFloat(tag(flavor_id + "|" + key.replace(/\s/g,"_")).value) || 0
+           // console.log(clinic_id + "|" + key.replace(/\s/g,"_"))
+            clinic_total += parseFloat(tag(clinic_id + "|" + key.replace(/\s/g,"_")).value) || 0
         }
     }
-    return flavor_total
+    return clinic_total
 }
 
 async function update_observation(entry){
@@ -541,8 +541,8 @@ async function update_observation(entry){
         return
     }
     //We get here if value data has been entered in an input box.
-    const flavor_id = entry.id.split("|")[0] //grab the identifier for the flavor
-    //build an object with the flavorID, store, container, and quantity to be updated.
+    const clinic_id = entry.id.split("|")[0] //grab the identifier for the clinic
+    //build an object with the clinicID, store, container, and quantity to be updated.
     const params={
         item_id:entry.dataset.item_id,
         quantity:entry.value,
@@ -558,13 +558,13 @@ async function update_observation(entry){
         params.mode="update_inventory_count"
         params.obs_id=entry.dataset.obs_id
         console.log("updating", params.obs_id)
-        //use the server_request function to update the value (the update_inventory_count function in google app script is called and the appropriate flavor, store, container, and quantity information is passed)
+        //use the server_request function to update the value (the update_inventory_count function in google app script is called and the appropriate clinic, store, container, and quantity information is passed)
         const response=await server_request(params)    
         console.log("update response", response)
         
         if(response.status==="success"){//if the value is successfully updated, the appearance of the cell is changed to reflect the update.
-            console.log("updated", flavor_total)
-            tag(flavor_id + "|total").innerHTML = flavor_total(flavor_id)
+            console.log("updated", clinic_total)
+            tag(clinic_id + "|total").innerHTML = clinic_total(clinic_id)
             entry.parentElement.classList.remove("working")
             entry.parentElement.classList.remove("active")
             entry.parentElement.classList.add("inactive")
@@ -589,7 +589,7 @@ async function update_observation(entry){
         console.log("insert response", response)
         
         if(response.status==="success"){//If it is inserted correctly, the appearance of the cell is changed to reflect the update.
-            tag(flavor_id + "|total").innerHTML = flavor_total(flavor_id)
+            tag(clinic_id + "|total").innerHTML = clinic_total(clinic_id)
             entry.parentElement.classList.remove("working")
             entry.parentElement.classList.remove("active")
             entry.parentElement.classList.add("inactive")
