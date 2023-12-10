@@ -398,9 +398,9 @@ async function create_account(params){
     if(!params){ 
         tag("canvas").innerHTML=` 
         <div class="page">
-            <h2>New Employee</h2>
+            <h2>Create New Student Profile</h2>
             <div id="create-account-message" style="width:170px;padding-top:1rem;margin-bottom:1rem">
-            Enter the new employee information here.  If present, the employee can enter a password of thier choosing; otherwise, make one up and they can reset it.
+            Enter the new physician assistant information manually. 
             </div>
             <div id="create_account_panel"></div>
         </div>
@@ -410,7 +410,7 @@ async function create_account(params){
         if(params.button==='Create Account'){
             response = await server_request(params)
             console.log("response in submit_account", response)
-            tag("create-account-message").innerHTML="Check your email for a code and enter it here."
+            tag("create-account-message").innerHTML="Check email for a code and enter it here."
             if(response.status==="success"){
                 panel.innerHTML=`
                 ${params.first_name}
@@ -483,7 +483,7 @@ async function create_account(params){
                         html.push(`<option value="${val}">${key}</option>`)
                 }
             html.push(`</select><br><br>
-                    Other employees can see ...<br>
+                   Information visible:<br>
                     <select name="visibility">
                         <option value="show-all" selected>my phone and email</option>
                         <option value="email-only">my email address only</option>
