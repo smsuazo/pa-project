@@ -45,9 +45,9 @@ const authenticated_menu=[
     //This menu item allows the user to add additional users. Note the "roles" property of the object. Only users with the role of "manager", "owner", or "administrator" will see this menu item. User roles are not heirachical. All user types you wish to see a menu item must be listed in the elements of the array.
     {label:"Create Student Profile",function:"navigate({fn:'create_account'})", roles:["manager","owner","administrator"]}, 
     //This menu item adds the menu item for updating an inventory count. Notice how a parameter is passed to the "ice_cream_inventory" function
-    {label:"Enter Student flavor Hours",home:"Inventory",function:"navigate({fn:'record_inventory'})"},
+    {label:"Enter Student Clinic Hours",home:"Inventory",function:"navigate({fn:'record_inventory'})"},
     //the remaining menu items are added
-    {label:"flavor Hours Summary",home:"Inventory",function:"navigate({fn:'show_inventory_summary'})", roles:["owner","administrator"]},
+    {label:"Clinic Hours Summary",home:"Inventory",function:"navigate({fn:'show_inventory_summary'})", roles:["owner","administrator"]},
 
     {label:"Student List",function:"navigate({fn:'employee_list'})"},
     {label:"Admin Tools",id:"menu2", roles:["manager","owner","administrator"], menu:[
@@ -134,7 +134,7 @@ async function record_inventory(params){
         //building the HTML shell
         tag("canvas").innerHTML=` 
             <div class="page">
-                <div id="inventory-title" style="text-align:center"><h2>Add flavor Hours</h2></div>
+                <div id="inventory-title" style="text-align:center"><h2>Add Clinic Hours</h2></div>
                 <div id="inventory-message" style="width:100%"></div>
                 <div id="inventory_panel"  style="width:100%">
                 </div>
@@ -155,7 +155,7 @@ async function record_inventory(params){
             })
         }else{
             //We get here if the user is associated with more than 1 store. We build a form to have the user select the store they wish to work with.
-            const html=['<form>flavor: <select name="store">']
+            const html=['<form>Clinic: <select name="store">']
             for(store of user_data.store){
                 html.push(`<option value="${store}">${store_list()[store]}</option>`)
             }
@@ -305,7 +305,7 @@ async function show_inventory_summary(params){
     //building the HTML shell
     tag("canvas").innerHTML=` 
         <div class="page">
-            <div id="inventory-title" style="text-align:center"><h2>flavor Hours</h2></div>
+            <div id="inventory-title" style="text-align:center"><h2>Clinic Hours</h2></div>
             <div id="inventory-message" style="width:100%"></div>
             <div id="inventory_panel"  style="width:100%">
             </div>
@@ -331,14 +331,14 @@ async function show_inventory_summary(params){
 
         console.log("response", response)
         //build the HMTL heading for the report
-        tag("inventory-title").innerHTML=`<h2>flavor Hours Summary</h2>`
+        tag("inventory-title").innerHTML=`<h2>Clinic Hours Summary</h2>`
 
 
         //Build the table to display the report. The columns of the table are: flavor, the stores available to the user, and the total inventory. Since only the owner is given the option to view inventory counts (see the autheticated_user global variable), all stores will be shown in the report.
         const header=[`
         <table class="inventory-table">
             <tr>
-            <th class="sticky">flavor</th>
+            <th class="sticky">Student ID</th>
             `]
 
         for(const [key,val] of Object.entries(store_list())){
