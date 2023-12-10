@@ -463,7 +463,7 @@ async function create_account(params){
                 <input placeholder="Email Address" name="email"><br>
                 <input placeholder="Phone Number" name="phone"><br>
                 <input placeholder="Password" name="password" type="password"><br>
-                Store: <select name="store">
+                Clinic: <select name="store">
                 <option value="" selected></option>
                 `]
 
