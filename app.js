@@ -49,7 +49,7 @@ const authenticated_menu=[
     //the remaining menu items are added
     {label:"Clinic Hours Summary",home:"Inventory",function:"navigate({fn:'show_inventory_summary'})", roles:["owner","administrator"]},
 
-    {label:"Student List",function:"navigate({fn:'employee_list'})"},
+    {label:"PA Program Directory",function:"navigate({fn:'employee_list'})"},
     {label:"Admin Tools",id:"menu2", roles:["manager","owner","administrator"], menu:[
         {label:"Update User",function:"update_user()",panel:"update_user"},
     ]},
@@ -617,9 +617,9 @@ async function employee_list(){
     //Build the HTML placeholders for the employee data.
     tag("canvas").innerHTML=` 
     <div class="page">
-        <h2>Student List</h2>
+        <h2>PA Program Contact Directory</h2>
         <div id="member-list-message" style="padding-top:1rem;margin-bottom:1rem">
-        Student information is private and should not be shared.
+        Full-time and part-time faculty information is found below.
         </div>
         <div id="employee_list_panel">
         <i class="fas fa-spinner fa-pulse"></i>
